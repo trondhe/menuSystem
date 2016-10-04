@@ -1,17 +1,18 @@
 ﻿#include <stdio.h>
 #include <time.h>
-#include "stdafx.h"
 
-typedef struct {
+typedef struct node_type {
 	int val;
 	char** screendata;
-	int** node_nxt;
-	int* node_pre;
+	
+	struct node_type *node_nxt;
+	struct node_type *node_pre;
+
 } node_type;
 
 node_type node_main;
 //node_main->screendata = { "kuk", "i", "kurry" };
-node_main->val = 5;
+//node_main->val = 5;
 
 void printscreen(char frame[8][21]) {
 	for (int j = 0; j < 8; j++) {
