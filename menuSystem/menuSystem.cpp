@@ -4,6 +4,26 @@
 #include <conio.h>
 #include <string.h>
 
+typedef struct node_t {
+	char node_name[21];
+	struct node_t *node_prnt;
+	struct node_t **node_chld;
+} node_t;
+
+node_t* node_init(int num_pointers, char* name)
+{
+	node_t* node = (node_t*)malloc(sizeof(node_t));
+	if (node == NULL){
+		return NULL;
+	}
+	strcpy(node->node_name, name);
+	node->node_prnt = (node_t**)malloc(sizeof(node_t*));
+	node->node_chld = (node_t**)malloc(sizeof(node_t*) * num_pointers);
+	for (int i = 0; i < 8; i++){
+		node->node_chld[i] = NULL;
+	}
+	return node;
+}
 
 void printscreen(char frame[8][21]) {
 	for (int j = 0; j < 8; j++) {
@@ -14,10 +34,17 @@ void printscreen(char frame[8][21]) {
 	}
 }
 
-
 int main()
 {
-	typedef struct node_t {
+	//node_t* node_ = node_init(8, "");
+	node_t* node_mthr = node_init(8, "Home");
+	node_t* node_play = node_init(8, "Play");
+	node_t* node_sett = node_init(8, "Settings");
+	node_t* node_high = node_init(8, "Highscore");
+	node_t* node_estr = node_init(8, "Easteregg");
+
+
+	/*typedef struct node_t {
 		char** scrndata;
 		struct node_t *node_nxt[8];
 		struct node_t *node_pre;
@@ -63,7 +90,7 @@ int main()
 		node_sett.scrndata[i] = scrndata_sett[i];
 		node_east.scrndata[i] = scrndata_east[i];
 	}
-
+	*/
 	char buffer[8][21];
 
 	for (int i = 0; i < 8; i++) {
