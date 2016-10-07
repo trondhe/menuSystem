@@ -71,53 +71,6 @@ int main()
 		node_t* node_dickbutt = node_init(8, "Dickbutt", &node_estr);
 
 
-	/*typedef struct node_t {
-		char** scrndata;
-		struct node_t *node_nxt[8];
-		struct node_t *node_pre;
-	} node_t;
-
-	char* scrndata_mthr[8] = { "Play", "Settings", "Easteregg", "4", "5", "6", "7", "8" };
-	char* scrndata_play[8] = { "Normal", "Hard", "u w0t m8", "4", "5", "6", "7", "8" };
-	char* scrndata_sett[8] = { "Tuning", "mordi", "deadzone", "balleflass", "bla", "bleh", "bluh", "gaga" };
-	char* scrndata_east[8] = { "penis", "i", "anus", "kuk", "i", "kurry", "dick", "butt" };
-
-	node_t node_mthr;
-	node_t node_play;
-	node_t node_sett;
-	node_t node_east;
-
-	node_mthr.node_pre = NULL;
-	node_mthr.node_nxt[0] = &node_play;
-	node_mthr.node_nxt[1] = &node_sett;
-	node_mthr.node_nxt[2] = &node_east;
-	
-	for (int i = 3; i < 8; i++) {
-		node_mthr.node_nxt[i] = NULL;
-	}
-
-	node_play.node_pre = &node_mthr;
-	node_sett.node_pre = &node_mthr;
-	node_east.node_pre = &node_mthr;
-
-	for (int i = 0; i < 8; i++) {
-		node_play.node_nxt[i] = NULL;
-		node_sett.node_nxt[i] = NULL;
-		node_east.node_nxt[i] = NULL;
-	}
-
-	node_mthr.scrndata = (char**)malloc(sizeof(char*) * 8);
-	node_play.scrndata = (char**)malloc(sizeof(char*) * 8);
-	node_sett.scrndata = (char**)malloc(sizeof(char*) * 8);
-	node_east.scrndata = (char**)malloc(sizeof(char*) * 8);
-
-	for (int i = 0; i < 8; i++) {
-		node_mthr.scrndata[i] = scrndata_mthr[i];
-		node_play.scrndata[i] = scrndata_play[i];
-		node_sett.scrndata[i] = scrndata_sett[i];
-		node_east.scrndata[i] = scrndata_east[i];
-	}
-	*/
 	char buffer[8][21];
 
 	for (int i = 0; i < 8; i++) {
@@ -179,11 +132,11 @@ int main()
 			}
 		}
 
-		for (int i = 0; i < 8; i++) {
-			for (int j = 0; j < strlen((*node_current).scrndata[i]); j++) {
-				buffer[i][j+1] = (*node_current).scrndata[i][j];
+		for (int i = 0; i < (*node_current).node_chld_count; i++) {
+			for (int j = 0; j < strlen(node_current->node_chld->node_name); j++) {
+				buffer[i][j+1] = ;
 			}
-			for (int j = strlen((*node_current).scrndata[i]); j < 20; j++) {
+			for (int j = strlen(); j < 20; j++) {
 				buffer[i][j+1] = 32;
 			}
 		}
