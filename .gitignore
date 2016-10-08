@@ -6,12 +6,14 @@
 *.user
 *.userosscache
 *.sln.docstates
-# **/Debug/
-# **/x64/
-# *.vcxproj.*
-# Debug/
-# x64/
-
+**/Debug/**
+**/x64/**
+*.vcxproj.*
+*.vcxproj
+Debug/
+x64/
+*.sln
+desktop.ini
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
 
