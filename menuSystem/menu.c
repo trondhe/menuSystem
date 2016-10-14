@@ -1,3 +1,8 @@
+#include <stdio.h>
+#include <time.h>
+#include <stdlib.h>
+#include <conio.h>
+#include <string.h>
 #include "menu.h"
 
 
@@ -55,9 +60,14 @@ node_t* node_menuinit() {
 	return node_mthr;
 }
 
-char** screenbuffer_init() {
-	char buffer[8][21];
 
+char** screenbuffer_init() {
+	char** buffer = (char**)calloc(8, sizeof(char*));
+	
+	for (int i = 0; i < 8; i++) {
+		buffer[i] = calloc(21, sizeof(char));
+	}
+	
 	for (int i = 0; i < 8; i++) {
 		for (int j = 0; j < 21; j++) {
 			buffer[i][j] = 32;
@@ -66,15 +76,18 @@ char** screenbuffer_init() {
 	return buffer;
 }
 
-void menu_nav(node_t* node_current, char** buffer) {
 
+void menu_nav(node_t** node_current, char** buffer) {
+	
 	static int menuctrl_state = 0;
 	static int menuctrl = 0;
+
+	menuctrl = _getch();
 
 	switch (menuctrl) {
 	case 119:	//up
 		if (menuctrl_state == 0) {
-			menuctrl_state = (node_current->node_chld_count - 1);
+			menuctrl_state = ((*node_current)->node_chld_count - 1);
 			break;
 		}
 		else {
@@ -82,7 +95,7 @@ void menu_nav(node_t* node_current, char** buffer) {
 		}
 		break;
 	case 115:	//down
-		if (menuctrl_state == (node_current->node_chld_count - 1)) {
+		if (menuctrl_state == ((**node_current).node_chld_count - 1)) {
 			menuctrl_state = 0;
 			break;
 		}
@@ -91,22 +104,18 @@ void menu_nav(node_t* node_current, char** buffer) {
 		}
 		break;
 	case 100:	//right
-		if ((*node_current).node_chld[menuctrl_state] == NULL) {
+		if ((**node_current).node_chld[menuctrl_state] == NULL) {
 			break;
 		}
-		node_current = (*node_current).node_chld[menuctrl_state];
+		*node_current = (**node_current).node_chld[menuctrl_state];
 		break;
 	case 97:	//left
-		if ((*node_current).node_prnt == NULL) {
+		if ((**node_current).node_prnt == NULL) {
 			break;
 		}
-		node_current = (*node_current).node_prnt;
+		*node_current = (**node_current).node_prnt;
 		break;
 	}
-
-	printf("%x", buffer[0][0]);
-
-	while (1) {}
 	
 	for (int i = 0; i < 8; i++) {
 		if (i != menuctrl_state)
@@ -117,5 +126,5 @@ void menu_nav(node_t* node_current, char** buffer) {
 			buffer[i][0] = 175;
 		}
 	}
-	menuctrl = _getch();
+	
 }

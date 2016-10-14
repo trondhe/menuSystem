@@ -6,7 +6,7 @@
 #include "menu.h"
 
 
-void printscreen(char frame[8][21]) {
+void printscreen(char** frame) {
 	for (int j = 0; j < 8; j++) {
 		for (int i = 0; i < 21; i++) {
 			printf("%c", frame[j][i]);
@@ -22,8 +22,8 @@ int main()
 	
 	while (1) {
 
-	
-		menu_nav(node_current, buffer);
+
+		menu_nav(&node_current, buffer);
 
 		for (int i = 0; i < node_current->node_chld_count; i++) {
 			for (int j = 0; j < strlen(node_current->node_chld[i]->node_name); j++) {
