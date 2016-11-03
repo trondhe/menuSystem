@@ -62,10 +62,10 @@ node_t* node_menuinit() {
 
 
 char** screenbuffer_init() {
-	char** buffer = (char**)calloc(8, sizeof(char*));
+	char** buffer = (char**)malloc(sizeof(char*) * 8);
 	
 	for (int i = 0; i < 8; i++) {
-		buffer[i] = calloc(21, sizeof(char));
+		buffer[i] = malloc(sizeof(char) * 16);
 	}
 	
 	for (int i = 0; i < 8; i++) {
