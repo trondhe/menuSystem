@@ -1,8 +1,7 @@
 #pragma once
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#define SCREENBUFFER_WIDTH		16
+#define SCREENBUFFER_HEIGHT		8
 
 void print2cmd(char** frame);
 char** screenbuffer_init();

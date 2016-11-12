@@ -1,3 +1,8 @@
+#include <stdio.h>
+#include <time.h>
+#include <stdlib.h>
+#include <conio.h>
+#include <string.h>
 #include "menu.h"
 
 
@@ -9,23 +14,27 @@ int* menuctrl_state_pass2main() {
 	return &menuctrl_state;
 }
 
-node_t* node_init(int num_pointers, char* name, node_t* parent, void* action)
+node_t* node_init(int num_childs, char* name, node_t* parent, void* action)
 {
+	int namelength = strlen(name);
+	printf("%d\n", namelength);
+
 	node_t* node = (node_t*)malloc(sizeof(node_t));
 	if (node == NULL) {
 		return NULL;
 	}
-	node->node_chld_count = 0;
+	node->node_name = malloc(sizeof((char) * namelength));
+	node->node_child_count = 0;
 	strcpy_s(node->node_name, 21, name);
-	node->node_prnt = (node_t*)malloc(sizeof(node_t));
-	node->node_prnt = parent;
-	node->node_chld = (node_t**)malloc(sizeof(node_t*) * num_pointers);
+	node->node_parent = (node_t*)malloc(sizeof(node_t*));
+	node->node_parent = parent;
+	node->node_child = (node_t**)malloc(sizeof(node_t*) * num_childs);
 	for (int i = 0; i < 8; i++) {
-		node->node_chld[i] = NULL;
+		node->node_child[i] = NULL;
 	}
 	if (parent != NULL) {
-		parent->node_chld[parent->node_chld_count] = node;
-		parent->node_chld_count++;
+		parent->node_child[parent->node_child_count] = node;
+		parent->node_child_count++;
 	}
 	node->action = action;
 	return node;
@@ -69,11 +78,11 @@ void menu_nav(node_t** node_current) {
 
 	switch (menuctrl) {
 		case 119:	// Menu control direction: UP
-			if ((**node_current).node_chld_count == 0) {
+			if ((**node_current).node_child_count == 0) {
 				break;
 			}
 			else if (menuctrl_state == 0) {
-				menuctrl_state = ((**node_current).node_chld_count - 1);
+				menuctrl_state = ((**node_current).node_child_count - 1);
 				menuctrl_hold = 1;
 				break;
 			}
@@ -84,10 +93,10 @@ void menu_nav(node_t** node_current) {
 			break;
 
 		case 115:	// Menu control direction: DOWN
-			if ((**node_current).node_chld_count == 0) {
+			if ((**node_current).node_child_count == 0) {
 				break;
 			}
-			else if (menuctrl_state == ((**node_current).node_chld_count - 1)) {
+			else if (menuctrl_state == ((**node_current).node_child_count - 1)) {
 				menuctrl_state = 0;
 				menuctrl_hold = 1;
 				break;
@@ -99,22 +108,25 @@ void menu_nav(node_t** node_current) {
 			break;
 
 		case 100:	// Menu control direction: RIGHT
-			if ((**node_current).node_chld[menuctrl_state]->node_chld_count == 0) {
-				(**node_current).node_chld[menuctrl_state]->action();
+			if ((**node_current).node_child[menuctrl_state]->node_child_count == 0) {
+				if ((**node_current).node_child[menuctrl_state]->action == NULL) {
+					break;
+				}
+				(**node_current).node_child[menuctrl_state]->action();
 				menuctrl_hold = 1;
 				break;
 			}
-			*node_current = (**node_current).node_chld[menuctrl_state];
+			*node_current = (**node_current).node_child[menuctrl_state];
 			menuctrl_hold = 1;
 			menuctrl_state = 0;
 			break;
 
 		case 97:	// Menu control direction: LEFT
-			if ((**node_current).node_prnt == NULL) {
+			if ((**node_current).node_parent == NULL) {
 				menuctrl_hold = 1;
 				break;
 			}
-			*node_current = (**node_current).node_prnt;
+			*node_current = (**node_current).node_parent;
 			menuctrl_hold = 1;
 			menuctrl_state = 0;
 			break;

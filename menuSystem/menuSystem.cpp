@@ -13,12 +13,10 @@ int main()
 	char** buffer = screenbuffer_init();
 	int* menuctrl_state = menuctrl_state_pass2main();
 	
-
 	// -------- System loop --------
 	while (1) {
 		menu_nav(&node_current);
 		buffer_writemenu(buffer, &node_current, menuctrl_state);
-		system("cls");
 		print2cmd(buffer);
 	}
 	return 0;
