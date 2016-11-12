@@ -4,43 +4,22 @@
 #include <conio.h>
 #include <string.h>
 #include "menu.h"
-
-
-void printscreen(char** frame) {
-	for (int j = 0; j < 8; j++) {
-		for (int i = 0; i < 21; i++) {
-			printf("%c", frame[j][i]);
-		}
-		printf("\r\n");
-	}
-}
+#include "screen.h"
 
 int main()
-{
+{	
+	// -------- Menu and screen --------
 	node_t* node_current = node_menuinit();
 	char** buffer = screenbuffer_init();
+	int* menuctrl_state = menuctrl_state_pass2main();
 	
+
+	// -------- System loop --------
 	while (1) {
-
-
-		menu_nav(&node_current, buffer);
-
-		for (int i = 0; i < node_current->node_chld_count; i++) {
-			for (int j = 0; j < strlen(node_current->node_chld[i]->node_name); j++) {
-				buffer[i][j + 1] = node_current->node_chld[i]->node_name[j];
-			}
-			for (int j = strlen(node_current->node_chld[i]->node_name); j < 20; j++) {
-				buffer[i][j + 1] = 32;
-			}
-		}
-
+		menu_nav(&node_current);
+		buffer_writemenu(buffer, &node_current, menuctrl_state);
 		system("cls");
-		printscreen(buffer);
-		//printf("%i\n", menuctrl);
-		//printf("%i", menuctrl_state);
-		
-		//itoa()
-		//_sleep(100);
+		print2cmd(buffer);
 	}
 	return 0;
 }
