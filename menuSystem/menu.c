@@ -16,20 +16,17 @@ int* menuctrl_state_pass2main() {
 
 node_t* node_init(int num_childs, char* name, node_t* parent, void* action)
 {
-	int namelength = strlen(name);
-	printf("%d\n", namelength);
-
 	node_t* node = (node_t*)malloc(sizeof(node_t));
 	if (node == NULL) {
 		return NULL;
 	}
-	node->node_name = malloc(sizeof((char) * namelength));
+	node->node_name = malloc(sizeof(char) * strlen(name) + 1);
 	node->node_child_count = 0;
-	strcpy_s(node->node_name, 21, name);
+	strncpy(node->node_name, name, strlen(name));
 	node->node_parent = (node_t*)malloc(sizeof(node_t*));
 	node->node_parent = parent;
 	node->node_child = (node_t**)malloc(sizeof(node_t*) * num_childs);
-	for (int i = 0; i < 8; i++) {
+	for (int i = 0; i < num_childs; i++) {
 		node->node_child[i] = NULL;
 	}
 	if (parent != NULL) {
