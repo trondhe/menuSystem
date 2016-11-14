@@ -1,8 +1,3 @@
-#include <stdio.h>
-#include <time.h>
-#include <stdlib.h>
-#include <conio.h>
-#include <string.h>
 #include "menu.h"
 
 
@@ -20,15 +15,16 @@ node_t* node_init(int num_childs, char* name, node_t* parent, void* action)
 	if (node == NULL) {
 		return NULL;
 	}
-	node->node_name = malloc(sizeof(char) * strlen(name) + 1);
-	node->node_child_count = 0;
-	strncpy(node->node_name, name, strlen(name));
+
+	node->node_name = malloc(sizeof(char) * (strlen(name) + 1));
+	strcpy_s(node->node_name, (strlen(name) + 1), name);
 	node->node_parent = (node_t*)malloc(sizeof(node_t*));
 	node->node_parent = parent;
 	node->node_child = (node_t**)malloc(sizeof(node_t*) * num_childs);
 	for (int i = 0; i < num_childs; i++) {
 		node->node_child[i] = NULL;
 	}
+	node->node_child_count = 0;
 	if (parent != NULL) {
 		parent->node_child[parent->node_child_count] = node;
 		parent->node_child_count++;

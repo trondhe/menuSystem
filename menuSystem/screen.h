@@ -1,5 +1,10 @@
 #pragma once
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include "menu.h"
+
 #define SCREENBUFFER_WIDTH		16
 #define SCREENBUFFER_HEIGHT		8
 

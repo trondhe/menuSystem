@@ -1,5 +1,11 @@
 #pragma once
 
+#include <stdio.h>
+#include <time.h>
+#include <stdlib.h>
+#include <conio.h>
+#include <string.h>
+
 typedef struct node_t {
 	char* node_name;
 	struct node_t *node_parent;
